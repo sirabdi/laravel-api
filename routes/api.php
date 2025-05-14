@@ -18,3 +18,7 @@ Route::post('/login', action: [ApiController::class, 'login'])->name(name: 'logi
 // Users Route
 Route::get('/all-users', action: [ApiController::class, 'getAllUsers'])->name(name: 'getAllUsers');
 Route::put('/user/{userId}', action: [ApiController::class, 'editUser'])->name(name: 'editUser');
+Route::delete('/user/{userId}', action: [ApiController::class, 'deleteUser'])->name(name: 'deleteUser');
+
+// Product Category Route
+Route::post('/create-catogory', action: [ApiController::class, 'createCategory'])->name(name: 'createCategory');

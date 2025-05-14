@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
+use Str;
 use Hash;
 use App\Models\User;
+use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
+use App\Trait\FlieUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
+    use FlieUploadTrait;
+
     public function test() {
         return response()->json([
             'status' => 'success',
@@ -44,7 +49,7 @@ class ApiController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'This is out first api test route',
+            'message' => 'User Registered Successfully!',
             'data' => $response
         ], 200);
     }
@@ -133,6 +138,52 @@ class ApiController extends Controller
             'status' => 'success',
             'message' => 'User Updated!',
             'data' => $user
+        ], 200);
+    }
+
+    // Delete Users
+    public function deleteUser(int $userId) {
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'No user found!'
+            ], 404);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Delete data successfully!'
+        ], 200);
+    }
+
+    // New Product Category
+    public function createCategory(Request $request) {
+        $validator = Validator::make(data: $request->all(), rules: [
+            'name' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failed',
+                'message' => $validator->errors()
+            ], 404);
+        };
+
+        $data['name'] = $request->name;
+        $data['slug'] = Str::slug($request->name);
+        $imagePath = $this->uploadImage($request, 'image');
+        $data['image'] = isset($imagePath) ? $imagePath : '';
+
+        ProductCategory::create($data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product Category Created Successfully!',
+            'data' => $data
         ], 200);
     }
 }
