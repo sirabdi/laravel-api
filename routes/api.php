@@ -21,4 +21,6 @@ Route::put('/user/{userId}', action: [ApiController::class, 'editUser'])->name(n
 Route::delete('/user/{userId}', action: [ApiController::class, 'deleteUser'])->name(name: 'deleteUser');
 
 // Product Category Route
-Route::post('/create-catogory', action: [ApiController::class, 'createCategory'])->name(name: 'createCategory');
+Route::get('/all-categories', action: [ApiController::class, 'getAllCategories'])->name(name: 'getAllCategories');
+Route::post('/create-category', action: [ApiController::class, 'createCategory'])->name(name: 'createCategory');
+Route::post('/edit-category/{categoryId}', action: [ApiController::class, 'editCategory'])->name(name: 'editCategory');
