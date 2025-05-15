@@ -48,7 +48,7 @@ class ApiProductCategoryController extends Controller
 
         $data['name'] = $request->name;
         $data['slug'] = Str::slug($request->name);
-        $imagePath = $this->uploadImage($request, 'image');
+        $imagePath = $this->uploadImageFromBase64($request->input('image'));
         $data['image'] = isset($imagePath) ? $imagePath : '';
 
         ProductCategory::create($data);
@@ -71,8 +71,6 @@ class ApiProductCategoryController extends Controller
             ], 404);
         };
 
-        Log::info('Request Data:', $request->all());
-
         $validator = Validator::make(data: $request->all(), rules: [
             'name' => 'required'
         ]);
@@ -86,19 +84,16 @@ class ApiProductCategoryController extends Controller
 
         $productCategory->name = $request->name;
         $productCategory->slug = Str::slug($request->name);
-        $imagePath = $this->uploadImage($request, 'image');
+        $imagePath = $this->uploadImageFromBase64($request->input('image'));
 
         // Delete old image if it exists
         if ($imagePath) {
-            if (!empty($productCategory->image)) {
-                $oldImagePath = public_path($productCategory->image);
-                if (File::exists($oldImagePath)) {
-                    File::delete($oldImagePath);
-                }
-            }
+            $this->removeImage($productCategory->image);
         }
 
-        $productCategory['image'] = isset($imagePath) ? $imagePath : '';
+        $productCategory->image = isset($imagePath) ? $imagePath : '';
+
+        Log::info($productCategory);
 
         $productCategory->save();
 
@@ -106,6 +101,27 @@ class ApiProductCategoryController extends Controller
             'status' => 'success',
             'message' => 'Product Category Updated!',
             'data' => $productCategory
+        ], 200);
+    }
+
+    // Delete Users
+    public function deleteCategory(int $categoryId) {
+        $productCategory = ProductCategory::find($categoryId);
+
+        if (!$productCategory) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'No Category Found!'
+            ], 404);
+        }
+
+        $this->removeImage($productCategory->image);
+
+        $productCategory->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Delete Data Successfully!'
         ], 200);
     }
 }
