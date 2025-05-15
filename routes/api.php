@@ -32,4 +32,4 @@ Route::delete('/category/{categoryId}', action: [ApiProductCategoryController::c
 // Product Route
 Route::get('/all-products', action: [ApiProductController::class, 'getAllProducts'])->name(name: 'getAllProducts');
 Route::post('/create-product', action: [ApiProductController::class, 'createProduct'])->name(name: 'createProduct');
-Route::post('/edit-product/{productId}', action: [ApiProductController::class, 'editProduct'])->name(name: 'editProduct');
+Route::put('/edit-product/{productId}', action: [ApiProductController::class, 'editProduct'])->name(name: 'editProduct');

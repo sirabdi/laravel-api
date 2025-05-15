@@ -61,7 +61,7 @@ class ApiProductController extends Controller
         $data['category_id'] = $category->id;
         $data['slug'] = Str::slug($request->name);
         $data['description'] = $request->description;
-        $imagePath = $this->uploadImage($request, 'image');
+        $imagePath = $this->uploadImageFromBase64($request->input('image'));
         $data['image'] = isset($imagePath) ? $imagePath : '';
 
         Product::create($data);
@@ -109,7 +109,7 @@ class ApiProductController extends Controller
         $product->category_id = $request->category_id;
         $product->slug = Str::slug($request->name);
         $product->description = $request->description;
-        $imagePath = $this->uploadImage($request, 'image');
+        $imagePath = $this->uploadImageFromBase64($request->input('image'));
 
         // Delete old image if it exists
         if ($imagePath) {
