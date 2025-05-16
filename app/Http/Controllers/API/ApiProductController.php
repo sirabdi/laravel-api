@@ -126,4 +126,25 @@ class ApiProductController extends Controller
             'data' => $product
         ], 200);
     }
+
+    // Delete Product Category
+    public function deleteProduct(int $productId) {
+        $product = Product::find($productId);
+
+        if (!$product) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'No Product Found!'
+            ], 404);
+        }
+
+        $this->removeImage($product->image);
+
+        $product->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Delete Data Successfully!'
+        ], 200);
+    }
 }

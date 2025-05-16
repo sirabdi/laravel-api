@@ -104,7 +104,7 @@ class ApiProductCategoryController extends Controller
         ], 200);
     }
 
-    // Delete Users
+    // Delete Product Category
     public function deleteCategory(int $categoryId) {
         $productCategory = ProductCategory::find($categoryId);
 

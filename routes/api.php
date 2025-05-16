@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Controllers\API\ApiUserController;
 use App\Http\Controllers\API\ApiProductController;
+use App\Http\Controllers\API\ApiPaymentMethodController;
+use App\Http\Controllers\API\ApiShippingMethodController;
 use App\Http\Controllers\API\ApiProductCategoryController;
 
 Route::get('/user', function (Request $request) {
@@ -33,3 +35,16 @@ Route::delete('/category/{categoryId}', action: [ApiProductCategoryController::c
 Route::get('/all-products', action: [ApiProductController::class, 'getAllProducts'])->name(name: 'getAllProducts');
 Route::post('/create-product', action: [ApiProductController::class, 'createProduct'])->name(name: 'createProduct');
 Route::put('/edit-product/{productId}', action: [ApiProductController::class, 'editProduct'])->name(name: 'editProduct');
+Route::delete('/product/{productId}', action: [ApiProductController::class, 'deleteProduct'])->name(name: 'deleteProduct');
+
+// Shipping Method Route
+Route::get('/all-shipping-methods', action: [ApiShippingMethodController::class, 'getAllShippingMethod'])->name(name: 'getAllShippingMethod');
+Route::post('/create-shipping-method', action: [ApiShippingMethodController::class, 'createShippingMethod'])->name(name: 'createShippingMethod');
+Route::put('/shipping-method/{shippingMethodId}', action: [ApiShippingMethodController::class, 'editShippingMethod'])->name(name: 'editShippingMethod');
+Route::delete('/shipping-method/{shippingMethodId}', action: [ApiShippingMethodController::class, 'deleteShippingMethod'])->name(name: 'deleteShippingMethod');
+
+// Payment Method Route
+Route::get('/all-payment-methods', action: [ApiPaymentMethodController::class, 'getAllPaymentMethod'])->name(name: 'getAllPaymentMethod');
+Route::post('/create-payment-method', action: [ApiPaymentMethodController::class, 'createPaymentMethod'])->name(name: 'createPaymentMethod');
+Route::put('/payment-method/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'editPaymentMethod'])->name(name: 'editPaymentMethod');
+Route::delete('/payment-method/{shippingMethodId}', action: [ApiPaymentMethodController::class, 'deletePaymentMethod'])->name(name: 'deletePaymentMethod');
