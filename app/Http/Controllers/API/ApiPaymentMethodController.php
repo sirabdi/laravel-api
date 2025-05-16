@@ -78,7 +78,6 @@ class ApiPaymentMethodController extends Controller
 
         $paymentMethod->name = $request->name;
         $paymentMethod->method_code = $request->method_code;
-        $paymentMethod->status = $request->status;
 
         $paymentMethod->save();
 
@@ -105,6 +104,26 @@ class ApiPaymentMethodController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Delete Data Successfully!'
+        ], 200);
+    }
+
+    // Update Payment Status Method
+    public function updatePaymentStatusMethod(int $paymentMethodId) {
+        $paymentMethod = PaymentMethod::find($paymentMethodId);
+
+        if(!$paymentMethod) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Payment Method Id Not Found!'
+            ], 404);
+        }
+
+        $paymentMethod->status = $paymentMethod->status === 1 ? 0 : 1;
+        $paymentMethod->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Payment Method Status Successfully Updated!'
         ], 200);
     }
 }

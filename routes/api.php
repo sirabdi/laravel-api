@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Controllers\API\ApiUserController;
+use App\Http\Controllers\API\ApiOrderController;
 use App\Http\Controllers\API\ApiProductController;
 use App\Http\Controllers\API\ApiPaymentMethodController;
 use App\Http\Controllers\API\ApiShippingMethodController;
@@ -47,4 +48,10 @@ Route::delete('/shipping-method/{shippingMethodId}', action: [ApiShippingMethodC
 Route::get('/all-payment-methods', action: [ApiPaymentMethodController::class, 'getAllPaymentMethod'])->name(name: 'getAllPaymentMethod');
 Route::post('/create-payment-method', action: [ApiPaymentMethodController::class, 'createPaymentMethod'])->name(name: 'createPaymentMethod');
 Route::put('/payment-method/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'editPaymentMethod'])->name(name: 'editPaymentMethod');
-Route::delete('/payment-method/{shippingMethodId}', action: [ApiPaymentMethodController::class, 'deletePaymentMethod'])->name(name: 'deletePaymentMethod');
+Route::delete('/payment-method/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'deletePaymentMethod'])->name(name: 'deletePaymentMethod');
+Route::put('/payment-method/status/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'updatePaymentStatusMethod'])->name(name: 'updatePaymentStatusMethod');
+
+// Order Route
+Route::get('/all-orders', action: [ApiOrderController::class, 'getAllOrders'])->name(name: 'getAllOrders');
+Route::post('/create-order', action: [ApiOrderController::class, 'createOrder'])->name(name: 'createOrder');
+Route::put('/order/status/{orderId}', action: [ApiOrderController::class, 'editOrderStatus'])->name(name: 'editOrderStatus');
