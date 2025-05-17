@@ -54,4 +54,6 @@ Route::put('/payment-method/status/{paymentMethodId}', action: [ApiPaymentMethod
 // Order Route
 Route::get('/all-orders', action: [ApiOrderController::class, 'getAllOrders'])->name(name: 'getAllOrders');
 Route::post('/create-order', action: [ApiOrderController::class, 'createOrder'])->name(name: 'createOrder');
+Route::post('/order/status', action: [ApiOrderController::class, 'getOrderStatus'])->name(name: 'getOrderStatus');
+Route::post('/order/user/{userId}', action: [ApiOrderController::class, 'getOrderByUser'])->name(name: 'getOrderByUser');
 Route::put('/order/status/{orderId}', action: [ApiOrderController::class, 'editOrderStatus'])->name(name: 'editOrderStatus');

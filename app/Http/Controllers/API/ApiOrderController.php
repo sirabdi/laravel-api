@@ -3,19 +3,33 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\ShippingMethod;
 use App\Models\PaymentMethod;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ApiOrderController extends Controller
 {
     public function createOrder(Request $request) {
+        $userId = User::find($request->user_id);
+        $userEmail = User::where('email', $request->email)->get();
         $paymentMethodId = PaymentMethod::find($request->payment_method_id);
         $shippingMethodId = ShippingMethod::find($request->shipping_method_id);
+
+        Log::info($userId);
+        Log::info($userEmail);
+
+        if (!$userId || !$userEmail) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'User Data Not Found!'
+            ]);
+        }
 
         if (!$paymentMethodId) {
             return response()->json([
@@ -144,6 +158,51 @@ class ApiOrderController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Edit Order Status Successfully!'
+        ]);
+    }
+
+    public function getOrderStatus(Request $request) {
+        $orders = Order::where('order_status', $request->order_status)->where('payment_status', $request->payment_status)->with('orderItems')->get();
+
+        if(!$orders) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'No Order Found!'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Order Data Found!',
+            'count' => count($orders),
+            'data' => $orders
+        ]);
+    }
+
+    public function getOrderByUser(int $userId) {
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User Not Found!'
+            ]);
+        }
+
+        $orders = Order::where('user_id', $userId)->with('orderItems')->get();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Order Not Found!'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Order Data Found!',
+            'count' => count($orders),
+            'order' => $orders
         ]);
     }
 }
