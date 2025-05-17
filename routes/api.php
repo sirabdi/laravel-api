@@ -6,6 +6,7 @@ use App\Http\Controllers\API\ApiController;
 use App\Http\Controllers\API\ApiUserController;
 use App\Http\Controllers\API\ApiOrderController;
 use App\Http\Controllers\API\ApiProductController;
+use App\Http\Controllers\API\ApiUserAddressController;
 use App\Http\Controllers\API\ApiPaymentMethodController;
 use App\Http\Controllers\API\ApiShippingMethodController;
 use App\Http\Controllers\API\ApiProductCategoryController;
@@ -57,3 +58,7 @@ Route::post('/create-order', action: [ApiOrderController::class, 'createOrder'])
 Route::post('/order/status', action: [ApiOrderController::class, 'getOrderStatus'])->name(name: 'getOrderStatus');
 Route::post('/order/user/{userId}', action: [ApiOrderController::class, 'getOrderByUser'])->name(name: 'getOrderByUser');
 Route::put('/order/status/{orderId}', action: [ApiOrderController::class, 'editOrderStatus'])->name(name: 'editOrderStatus');
+
+// User Address Route
+Route::post('/create-user-address', action: [ApiUserAddressController::class, 'createUserAddress'])->name(name: 'createUserAddress');
+Route::get('/user-address/{userId}', action: [ApiUserAddressController::class, 'getUserAddress'])->name(name: 'getUserAddress');
