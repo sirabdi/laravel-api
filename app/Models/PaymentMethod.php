@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Order;
+
 use Illuminate\Database\Eloquent\Model;
 
 class PaymentMethod extends Model
@@ -11,4 +13,9 @@ class PaymentMethod extends Model
         'method_code',
         'status',
     ];
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

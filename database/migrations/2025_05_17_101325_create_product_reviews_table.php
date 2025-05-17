@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('product_reviews', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('product_id')->nullable();
-            $table->double('price');
-            $table->integer('qty')->default(1);
+            $table->integer('rating');
+            $table->string('review')->nullable();
+            $table->boolean("status")->default(1);
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('order_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('orders')
+                ->on('users')
                 ->onDelete('cascade');
             $table->foreign('product_id')
                 ->references('id')
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('product_reviews');
     }
 };

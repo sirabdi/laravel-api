@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Order;
+
 use Illuminate\Database\Eloquent\Model;
 
 class ShippingMethod extends Model
@@ -12,4 +14,9 @@ class ShippingMethod extends Model
         'shipping_price',
         'status',
     ];
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

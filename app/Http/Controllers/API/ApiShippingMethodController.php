@@ -82,7 +82,6 @@ class ApiShippingMethodController extends Controller
         $shippingMethod->name = $request->name;
         $shippingMethod->method_code = $request->method_code;
         $shippingMethod->shipping_price = $request->shipping_price;
-        $shippingMethod->status = $request->status;
 
         $shippingMethod->save();
 

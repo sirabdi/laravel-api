@@ -31,7 +31,7 @@ class ApiUserAddressController extends Controller
         }
 
         return response()->json([
-            "status" => 'failed',
+            "status" => 'success',
             "message" => 'User Addressess Found!',
             "count" => count($userAddresses),
             "data" => $userAddresses,
@@ -78,6 +78,66 @@ class ApiUserAddressController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Add User Address Succesfully!'
+        ]);
+    }
+
+    // Edit User Address
+    public function editUserAddress(int $addressId, Request $request) {
+        $address = UserAddress::find($addressId);
+
+        if (!$address) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Address Id Not Found!'
+            ]);
+        }
+
+        $validator = Validator::make(data: $request->all(), rules: [
+            'address_line_one' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip' => 'required',
+            'country' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failed',
+                'message' => $validator->errors()
+            ], 404);
+        };
+
+        $address->address_line_one = $request->address_line_one;
+        $address->address_line_two = $request->address_line_two;
+        $address->city = $request->city;
+        $address->state = $request->state;
+        $address->zip = $request->zip;
+        $address->country = $request->country;
+
+        $address->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Update User Address Succesfully!'
+        ]);
+    }
+
+    // Delete User Address
+    public function deleteUserAddress(int $addressId) {
+        $address = UserAddress::find($addressId);
+
+        if (!$address) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Product Id Not Found!'
+            ], 404);
+        }
+
+        $address->delete();
+
+        return response()->json([
+            'status' => 'failed',
+            'message' => 'Successfully Deleted Address!'
         ]);
     }
 }

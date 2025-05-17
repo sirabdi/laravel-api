@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ApiOrderController;
 use App\Http\Controllers\API\ApiProductController;
 use App\Http\Controllers\API\ApiUserAddressController;
 use App\Http\Controllers\API\ApiPaymentMethodController;
+use App\Http\Controllers\API\ApiProductReviewController;
 use App\Http\Controllers\API\ApiShippingMethodController;
 use App\Http\Controllers\API\ApiProductCategoryController;
 
@@ -56,9 +57,16 @@ Route::put('/payment-method/status/{paymentMethodId}', action: [ApiPaymentMethod
 Route::get('/all-orders', action: [ApiOrderController::class, 'getAllOrders'])->name(name: 'getAllOrders');
 Route::post('/create-order', action: [ApiOrderController::class, 'createOrder'])->name(name: 'createOrder');
 Route::post('/order/status', action: [ApiOrderController::class, 'getOrderStatus'])->name(name: 'getOrderStatus');
+Route::get('/order/{userId}', action: [ApiOrderController::class, 'getDetailOrder'])->name(name: 'getDetailOrder');
 Route::post('/order/user/{userId}', action: [ApiOrderController::class, 'getOrderByUser'])->name(name: 'getOrderByUser');
 Route::put('/order/status/{orderId}', action: [ApiOrderController::class, 'editOrderStatus'])->name(name: 'editOrderStatus');
 
 // User Address Route
 Route::post('/create-user-address', action: [ApiUserAddressController::class, 'createUserAddress'])->name(name: 'createUserAddress');
+Route::put('/user-address/{userId}', action: [ApiUserAddressController::class, 'editUserAddress'])->name(name: 'editUserAddress');
 Route::get('/user-address/{userId}', action: [ApiUserAddressController::class, 'getUserAddress'])->name(name: 'getUserAddress');
+Route::delete('/user-address/{userId}', action: [ApiUserAddressController::class, 'deleteUserAddress'])->name(name: 'deleteUserAddress');
+
+// Product Review Route
+Route::post('/create-product-review', action: [ApiProductReviewController::class, 'createProductReview'])->name(name: 'createProductReview');
+Route::get('/product-review/{productId}', action: [ApiProductReviewController::class, 'getReviewByProduct'])->name(name: 'getReviewByProduct');

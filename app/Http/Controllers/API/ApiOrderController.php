@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\ShippingMethod;
 use App\Models\PaymentMethod;
+use App\Models\UserAddress;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Order;
@@ -18,6 +19,7 @@ class ApiOrderController extends Controller
     public function createOrder(Request $request) {
         $userId = User::find($request->user_id);
         $userEmail = User::where('email', $request->email)->get();
+        $userAddressId = UserAddress::find($request->user_address_id);
         $paymentMethodId = PaymentMethod::find($request->payment_method_id);
         $shippingMethodId = ShippingMethod::find($request->shipping_method_id);
 
@@ -28,7 +30,7 @@ class ApiOrderController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'User Data Not Found!'
-            ]);
+            ], 400);
         }
 
         if (!$paymentMethodId) {
@@ -42,6 +44,13 @@ class ApiOrderController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Shipping Method Id Not Found!'
+            ], 400);
+        }
+
+        if (!$userAddressId) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'User Address Id Not Found!'
             ], 400);
         }
 
@@ -77,6 +86,7 @@ class ApiOrderController extends Controller
         $data['user_id'] = $request->user_id;
         $data['shipping_method_id'] = $request->shipping_method_id;
         $data['payment_method_id'] = $request->payment_method_id;
+        $data['user_address_id'] = $request->user_address_id;
         $data['email'] = $request->email;
         $data['shipping_price'] = $request->shipping_price;
         $data['tax'] = $request->tax;
@@ -203,6 +213,23 @@ class ApiOrderController extends Controller
             'message' => 'Order Data Found!',
             'count' => count($orders),
             'order' => $orders
+        ]);
+    }
+
+    public function getDetailOrder(int $orderId) {
+        $order = Order::where('id', $orderId)->with('orderItems')->with('userAddress')->with('paymentMethod')->with('shippingMethod')->get();
+
+        if (!$order) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Order Not Found!'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Order Detail Found!',
+            'data' => $order
         ]);
     }
 }

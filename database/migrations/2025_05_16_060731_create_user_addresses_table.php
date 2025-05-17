@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable()->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('address_line_one');
             $table->string('address_line_two')->nullable();
             $table->string('city');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('country')->default('US');
             $table->timestamps();
 
-            // Foreign key constraint
+            // Foreign key constraintx
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

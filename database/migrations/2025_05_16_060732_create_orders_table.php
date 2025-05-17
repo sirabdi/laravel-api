@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->default(0);
-            $table->unsignedBigInteger('shipping_method_id')->nullable()->default(0);
-            $table->unsignedBigInteger('payment_method_id')->nullable()->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('shipping_method_id')->nullable();
+            $table->unsignedBigInteger('payment_method_id')->nullable();
+            $table->unsignedBigInteger('user_address_id')->nullable();
             $table->string('email');
             $table->double('shipping_price')->nullable()->default(0.0);
             $table->double('tax')->nullable()->default(0.0);
@@ -27,23 +28,21 @@ return new class extends Migration
 
             // Foreign key constraint
             $table->foreign('user_id')
+                ->references('id')
                 ->on('users')
-                ->onDelete('cascade')
-                ->references('id')
-                ->nullable()
-                ->default(0);
+                ->onDelete('cascade');
             $table->foreign('shipping_method_id')
+                ->references('id')
                 ->on('shipping_methods')
-                ->onDelete('cascade')
-                ->references('id')
-                ->nullable()
-                ->default(0);
+                ->onDelete('cascade');
             $table->foreign('payment_method_id')
-                ->on('payment_methods')
-                ->onDelete('cascade')
                 ->references('id')
-                ->nullable()
-                ->default(0);
+                ->on('payment_methods')
+                ->onDelete('cascade');
+            $table->foreign('user_address_id')
+                ->references('id')
+                ->on('user_addresses')
+                ->onDelete('cascade');
         });
     }
 

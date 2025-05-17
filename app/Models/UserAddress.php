@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Model;
 
 class UserAddress extends Model
@@ -15,4 +16,9 @@ class UserAddress extends Model
         'zip',
         'country',
     ];
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
