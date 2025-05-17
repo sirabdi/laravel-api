@@ -24,49 +24,49 @@ Route::post('/register', action: [ApiController::class, 'register'])->name(name:
 Route::post('/login', action: [ApiController::class, 'login'])->name(name: 'login');
 
 // Users Route
-Route::get('/all-users', action: [ApiUserController::class, 'getAllUsers'])->name(name: 'getAllUsers');
-Route::put('/user/{userId}', action: [ApiUserController::class, 'editUser'])->name(name: 'editUser');
-Route::delete('/user/{userId}', action: [ApiUserController::class, 'deleteUser'])->name(name: 'deleteUser');
+Route::get('/all-users', action: [ApiUserController::class, 'getAllUsers'])->name(name: 'getAllUsers')->middleware('auth:sanctum');
+Route::put('/user/{userId}', action: [ApiUserController::class, 'editUser'])->name(name: 'editUser')->middleware('auth:sanctum');
+Route::delete('/user/{userId}', action: [ApiUserController::class, 'deleteUser'])->name(name: 'deleteUser')->middleware('auth:sanctum');
 
 // Product Category Route
 Route::get('/all-categories', action: [ApiProductCategoryController::class, 'getAllCategories'])->name(name: 'getAllCategories');
-Route::post('/create-category', action: [ApiProductCategoryController::class, 'createCategory'])->name(name: 'createCategory');
-Route::put('/edit-category/{categoryId}', action: [ApiProductCategoryController::class, 'editCategory'])->name(name: 'editCategory');
-Route::delete('/category/{categoryId}', action: [ApiProductCategoryController::class, 'deleteCategory'])->name(name: 'deleteCategory');
+Route::post('/create-category', action: [ApiProductCategoryController::class, 'createCategory'])->name(name: 'createCategory')->middleware('auth:sanctum');
+Route::put('/edit-category/{categoryId}', action: [ApiProductCategoryController::class, 'editCategory'])->name(name: 'editCategory')->middleware('auth:sanctum');
+Route::delete('/category/{categoryId}', action: [ApiProductCategoryController::class, 'deleteCategory'])->name(name: 'deleteCategory')->middleware('auth:sanctum');
 
 // Product Route
 Route::get('/all-products', action: [ApiProductController::class, 'getAllProducts'])->name(name: 'getAllProducts');
-Route::post('/create-product', action: [ApiProductController::class, 'createProduct'])->name(name: 'createProduct');
-Route::put('/edit-product/{productId}', action: [ApiProductController::class, 'editProduct'])->name(name: 'editProduct');
-Route::delete('/product/{productId}', action: [ApiProductController::class, 'deleteProduct'])->name(name: 'deleteProduct');
+Route::post('/create-product', action: [ApiProductController::class, 'createProduct'])->name(name: 'createProduct')->middleware('auth:sanctum');
+Route::put('/edit-product/{productId}', action: [ApiProductController::class, 'editProduct'])->name(name: 'editProduct')->middleware('auth:sanctum');
+Route::delete('/product/{productId}', action: [ApiProductController::class, 'deleteProduct'])->name(name: 'deleteProduct')->middleware('auth:sanctum');
 
 // Shipping Method Route
 Route::get('/all-shipping-methods', action: [ApiShippingMethodController::class, 'getAllShippingMethod'])->name(name: 'getAllShippingMethod');
-Route::post('/create-shipping-method', action: [ApiShippingMethodController::class, 'createShippingMethod'])->name(name: 'createShippingMethod');
-Route::put('/shipping-method/{shippingMethodId}', action: [ApiShippingMethodController::class, 'editShippingMethod'])->name(name: 'editShippingMethod');
-Route::delete('/shipping-method/{shippingMethodId}', action: [ApiShippingMethodController::class, 'deleteShippingMethod'])->name(name: 'deleteShippingMethod');
+Route::post('/create-shipping-method', action: [ApiShippingMethodController::class, 'createShippingMethod'])->name(name: 'createShippingMethod')->middleware('auth:sanctum');
+Route::put('/shipping-method/{shippingMethodId}', action: [ApiShippingMethodController::class, 'editShippingMethod'])->name(name: 'editShippingMethod')->middleware('auth:sanctum');
+Route::delete('/shipping-method/{shippingMethodId}', action: [ApiShippingMethodController::class, 'deleteShippingMethod'])->name(name: 'deleteShippingMethod')->middleware('auth:sanctum');
 
 // Payment Method Route
 Route::get('/all-payment-methods', action: [ApiPaymentMethodController::class, 'getAllPaymentMethod'])->name(name: 'getAllPaymentMethod');
-Route::post('/create-payment-method', action: [ApiPaymentMethodController::class, 'createPaymentMethod'])->name(name: 'createPaymentMethod');
-Route::put('/payment-method/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'editPaymentMethod'])->name(name: 'editPaymentMethod');
-Route::delete('/payment-method/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'deletePaymentMethod'])->name(name: 'deletePaymentMethod');
-Route::put('/payment-method/status/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'updatePaymentStatusMethod'])->name(name: 'updatePaymentStatusMethod');
+Route::post('/create-payment-method', action: [ApiPaymentMethodController::class, 'createPaymentMethod'])->name(name: 'createPaymentMethod')->middleware('auth:sanctum');
+Route::put('/payment-method/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'editPaymentMethod'])->name(name: 'editPaymentMethod')->middleware('auth:sanctum');
+Route::delete('/payment-method/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'deletePaymentMethod'])->name(name: 'deletePaymentMethod')->middleware('auth:sanctum');
+Route::put('/payment-method/status/{paymentMethodId}', action: [ApiPaymentMethodController::class, 'updatePaymentStatusMethod'])->name(name: 'updatePaymentStatusMethod')->middleware('auth:sanctum');
 
 // Order Route
-Route::get('/all-orders', action: [ApiOrderController::class, 'getAllOrders'])->name(name: 'getAllOrders');
-Route::post('/create-order', action: [ApiOrderController::class, 'createOrder'])->name(name: 'createOrder');
-Route::post('/order/status', action: [ApiOrderController::class, 'getOrderStatus'])->name(name: 'getOrderStatus');
-Route::get('/order/{userId}', action: [ApiOrderController::class, 'getDetailOrder'])->name(name: 'getDetailOrder');
-Route::post('/order/user/{userId}', action: [ApiOrderController::class, 'getOrderByUser'])->name(name: 'getOrderByUser');
-Route::put('/order/status/{orderId}', action: [ApiOrderController::class, 'editOrderStatus'])->name(name: 'editOrderStatus');
+Route::get('/all-orders', action: [ApiOrderController::class, 'getAllOrders'])->name(name: 'getAllOrders')->middleware('auth:sanctum');
+Route::post('/create-order', action: [ApiOrderController::class, 'createOrder'])->name(name: 'createOrder')->middleware('auth:sanctum');
+Route::post('/order/status', action: [ApiOrderController::class, 'getOrderStatus'])->name(name: 'getOrderStatus')->middleware('auth:sanctum');
+Route::get('/order/{userId}', action: [ApiOrderController::class, 'getDetailOrder'])->name(name: 'getDetailOrder')->middleware('auth:sanctum');
+Route::post('/order/user/{userId}', action: [ApiOrderController::class, 'getOrderByUser'])->name(name: 'getOrderByUser')->middleware('auth:sanctum');
+Route::put('/order/status/{orderId}', action: [ApiOrderController::class, 'editOrderStatus'])->name(name: 'editOrderStatus')->middleware('auth:sanctum');
 
 // User Address Route
-Route::post('/create-user-address', action: [ApiUserAddressController::class, 'createUserAddress'])->name(name: 'createUserAddress');
-Route::put('/user-address/{userId}', action: [ApiUserAddressController::class, 'editUserAddress'])->name(name: 'editUserAddress');
-Route::get('/user-address/{userId}', action: [ApiUserAddressController::class, 'getUserAddress'])->name(name: 'getUserAddress');
-Route::delete('/user-address/{userId}', action: [ApiUserAddressController::class, 'deleteUserAddress'])->name(name: 'deleteUserAddress');
+Route::post('/create-user-address', action: [ApiUserAddressController::class, 'createUserAddress'])->name(name: 'createUserAddress')->middleware('auth:sanctum');
+Route::put('/user-address/{userId}', action: [ApiUserAddressController::class, 'editUserAddress'])->name(name: 'editUserAddress')->middleware('auth:sanctum');
+Route::get('/user-address/{userId}', action: [ApiUserAddressController::class, 'getUserAddress'])->name(name: 'getUserAddress')->middleware('auth:sanctum');
+Route::delete('/user-address/{userId}', action: [ApiUserAddressController::class, 'deleteUserAddress'])->name(name: 'deleteUserAddress')->middleware('auth:sanctum');
 
 // Product Review Route
-Route::post('/create-product-review', action: [ApiProductReviewController::class, 'createProductReview'])->name(name: 'createProductReview');
+Route::post('/create-product-review', action: [ApiProductReviewController::class, 'createProductReview'])->name(name: 'createProductReview')->middleware('auth:sanctum');
 Route::get('/product-review/{productId}', action: [ApiProductReviewController::class, 'getReviewByProduct'])->name(name: 'getReviewByProduct');
