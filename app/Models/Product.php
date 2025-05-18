@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ProductCategory;
+use App\Models\ProductGallery;
 use App\Models\Review;
 use App\Models\Cart;
 
@@ -31,8 +32,13 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function Cart()
+    public function carts()
     {
-        return $this->belongsTo(Cart::class);
+        return $this->hasMany(Cart::class);
+    }
+
+    public function ProductGallery()
+    {
+        return $this->hasMany(ProductGallery::class);
     }
 }
