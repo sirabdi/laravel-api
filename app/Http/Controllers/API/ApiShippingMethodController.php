@@ -17,7 +17,7 @@ class ApiShippingMethodController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'No Shipping Method Found!'
-            ], 400);
+            ], 404);
         };
 
         return response()->json([

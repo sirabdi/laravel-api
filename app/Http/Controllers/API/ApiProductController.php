@@ -22,7 +22,7 @@ class ApiProductController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'No Product Found!'
-            ], 400);
+            ], 404);
         };
 
         return response()->json([
@@ -37,7 +37,8 @@ class ApiProductController extends Controller
         $validator = Validator::make(data: $request->all(), rules: [
             'name' => 'required',
             'price' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'total_qty' => 'required',
         ]);
 
         if($validator->fails()){
@@ -61,6 +62,7 @@ class ApiProductController extends Controller
         $data['category_id'] = $category->id;
         $data['slug'] = Str::slug($request->name);
         $data['description'] = $request->description;
+        $data['total_qty'] = $request->total_qty;
         $imagePath = $this->uploadImageFromBase64($request->input('image'));
         $data['image'] = isset($imagePath) ? $imagePath : '';
 
@@ -87,7 +89,8 @@ class ApiProductController extends Controller
         $validator = Validator::make(data: $request->all(), rules: [
             'name' => 'required',
             'price' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'total_qty' => 'required'
         ]);
 
         if($validator->fails()){
@@ -109,6 +112,7 @@ class ApiProductController extends Controller
         $product->category_id = $request->category_id;
         $product->slug = Str::slug($request->name);
         $product->description = $request->description;
+        $product->total_qty = $request->total_qty;
         $imagePath = $this->uploadImageFromBase64($request->input('image'));
 
         // Delete old image if it exists

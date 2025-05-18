@@ -31,7 +31,7 @@ class ApiController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => $validator->errors()
-            ], 400);
+            ], 404);
         };
 
         $data = $request->all();
@@ -61,7 +61,7 @@ class ApiController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => $validator->errors()
-            ], 400);
+            ], 404);
         };
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -81,7 +81,7 @@ class ApiController extends Controller
             return response()->json([
                 'status' => 'fail',
                 'message' => 'Invalid Credentials!',
-            ], 400);
+            ], 404);
         }
     }
 

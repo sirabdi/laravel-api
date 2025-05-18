@@ -30,28 +30,28 @@ class ApiOrderController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'User Data Not Found!'
-            ], 400);
+            ], 404);
         }
 
         if (!$paymentMethodId) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Payment Method Id Not Found!'
-            ], 400);
+            ], 404);
         }
 
         if (!$shippingMethodId) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Shipping Method Id Not Found!'
-            ], 400);
+            ], 404);
         }
 
         if (!$userAddressId) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'User Address Id Not Found!'
-            ], 400);
+            ], 404);
         }
 
         $validator = Validator::make(data: $request->all(), rules: [
@@ -69,7 +69,7 @@ class ApiOrderController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => $validator->errors()
-            ], 400);
+            ], 404);
         }
 
         // Validate all product_ids exist
@@ -79,7 +79,7 @@ class ApiOrderController extends Controller
                 return response()->json([
                     'status' => 'failed',
                     'message' => "Product with ID {$item['product_id']} not found."
-                ], 400);
+                ], 404);
             }
         }
 
@@ -125,7 +125,7 @@ class ApiOrderController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'No Order Found!'
-            ], 400);
+            ], 404);
         };
 
         return response()->json([
@@ -143,7 +143,7 @@ class ApiOrderController extends Controller
                 'status' => 'failed',
                 'message' => 'No Order Found!'
 
-            ], 400);
+            ], 404);
         };
 
         $validator = Validator::make(data: $request->all(), rules: [

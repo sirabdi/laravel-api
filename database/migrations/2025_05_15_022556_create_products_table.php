@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->decimal('price', 10, 2);
+            $table->integer('total_qty')->default(0);
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->boolean('status')->default(true);

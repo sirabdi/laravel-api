@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Cart;
 use App\Models\OrderItem;
 use App\Models\UserAddress;
 use App\Models\PaymentMethod;
@@ -43,5 +44,10 @@ class Order extends Model
     public function shippingMethod()
     {
         return $this->belongsTo(ShippingMethod::class);
+    }
+
+    public function Cart()
+    {
+        return $this->belongsTo(Cart::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\ProductCategory;
 use App\Models\Review;
+use App\Models\Cart;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,7 @@ class Product extends Model
         'price',
         'image',
         'status',
+        'total_qty',
         'description',
         'category_id',
     ];
@@ -27,5 +29,10 @@ class Product extends Model
     public function review()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function Cart()
+    {
+        return $this->belongsTo(Cart::class);
     }
 }
