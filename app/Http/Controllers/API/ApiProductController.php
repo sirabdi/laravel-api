@@ -16,7 +16,7 @@ class ApiProductController extends Controller
 
     // Get All Product Category
     public function getAllProducts() {
-        $products = Product::get();
+        $products = Product::with('ProductGallery')->get();
 
         if (!$products) {
             return response()->json([
