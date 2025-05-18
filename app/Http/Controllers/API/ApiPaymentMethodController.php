@@ -17,7 +17,7 @@ class ApiPaymentMethodController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'No Payment Method Found!'
-            ], 400);
+            ], 404);
         };
 
         return response()->json([
@@ -73,7 +73,7 @@ class ApiPaymentMethodController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => $validator->errors()
-            ], 400);
+            ], 404);
         };
 
         $paymentMethod->name = $request->name;

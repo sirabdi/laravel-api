@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Controllers\API\ApiUserController;
+use App\Http\Controllers\API\ApiCartController;
 use App\Http\Controllers\API\ApiOrderController;
 use App\Http\Controllers\API\ApiProductController;
 use App\Http\Controllers\API\ApiUserAddressController;
@@ -71,3 +72,8 @@ Route::delete('/user-address/{userId}', action: [ApiUserAddressController::class
 // Product Review Route
 Route::post('/create-product-review', action: [ApiProductReviewController::class, 'createProductReview'])->name(name: 'createProductReview')->middleware('auth:sanctum');
 Route::get('/product-review/{productId}', action: [ApiProductReviewController::class, 'getReviewByProduct'])->name(name: 'getReviewByProduct');
+
+// Cart Route
+Route::post('/create-cart', action: [ApiCartController::class, 'createCart'])->name(name: 'createCart');
+Route::get('/cart/{userId}', action: [ApiCartController::class, 'getCartByUser'])->name(name: 'getCartByUser');
+Route::delete('/delete-cart/{cartId}', action: [ApiCartController::class, 'deteleCart'])->name(name: 'deteleCart');

@@ -17,7 +17,7 @@ class ApiUserController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'No Users Found!'
-            ], 400);
+            ], 404);
         };
 
         return response()->json([
@@ -47,7 +47,7 @@ class ApiUserController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => $validator->errors()
-            ], 400);
+            ], 404);
         };
 
         $user->name = $request->name;
