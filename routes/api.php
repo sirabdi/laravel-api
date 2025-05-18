@@ -21,12 +21,13 @@ Route::get('/test', action: [ApiController::class, 'test'])->name(name: 'test');
 
 // Auth Route
 Route::post('/register', action: [ApiController::class, 'register'])->name(name: 'register');
+Route::post('/logout', action: [ApiController::class, 'logout'])->name(name: 'logout')->middleware('auth:sanctum')->name('logout');
 Route::post('/login', action: [ApiController::class, 'login'])->name(name: 'login');
 
 // Users Route
-Route::get('/all-users', action: [ApiUserController::class, 'getAllUsers'])->name(name: 'getAllUsers')->middleware('auth:sanctum');
-Route::put('/user/{userId}', action: [ApiUserController::class, 'editUser'])->name(name: 'editUser')->middleware('auth:sanctum');
-Route::delete('/user/{userId}', action: [ApiUserController::class, 'deleteUser'])->name(name: 'deleteUser')->middleware('auth:sanctum');
+Route::get('/all-users', action: [ApiUserController::class, 'getAllUsers'])->name(name: 'getAllUsers')->middleware(['auth:sanctum', 'admin']);
+Route::put('/user/{userId}', action: [ApiUserController::class, 'editUser'])->name(name: 'editUser')->middleware(['auth:sanctum', 'admin']);
+Route::delete('/user/{userId}', action: [ApiUserController::class, 'deleteUser'])->name(name: 'deleteUser')->middleware(['auth:sanctum', 'admin']);
 
 // Product Category Route
 Route::get('/all-categories', action: [ApiProductCategoryController::class, 'getAllCategories'])->name(name: 'getAllCategories');
